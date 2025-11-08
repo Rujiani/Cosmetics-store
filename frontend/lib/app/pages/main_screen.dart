@@ -24,37 +24,43 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: IndexedStack(index: _currentIndex, children: _screens),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xffFFFFFF),
-        selectedItemColor: Colors.black,
-        unselectedItemColor: Color(0xFF70757F),
-        currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
-        showUnselectedLabels: true,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/images/icons/House.png')),
-            label: 'Главная',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage('assets/images/icons/MagnifyingGlass.png'),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          border: BorderDirectional(top: BorderSide(color: Color(0xFF70757F))),
+        ),
+        child: BottomNavigationBar(
+          backgroundColor: Color(0xffFFFFFF),
+          selectedItemColor: Colors.black,
+          unselectedItemColor: Color(0xFF70757F),
+          currentIndex: _currentIndex,
+          onTap: (index) => setState(() => _currentIndex = index),
+          showUnselectedLabels: true,
+          type: BottomNavigationBarType.fixed,
+          items: const [
+            BottomNavigationBarItem(
+              icon: ImageIcon(AssetImage('assets/images/icons/House.png')),
+              label: 'Главная',
             ),
-            label: 'Каталог',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(
-              AssetImage('assets/images/icons/ShoppingCartSimple.png'),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage('assets/images/icons/MagnifyingGlass.png'),
+              ),
+              label: 'Каталог',
             ),
-            label: 'Корзина',
-          ),
-          BottomNavigationBarItem(
-            icon: ImageIcon(AssetImage('assets/images/icons/User.png')),
-            label: 'Профиль',
-          ),
-        ],
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage('assets/images/icons/ShoppingCartSimple.png'),
+              ),
+              label: 'Корзина',
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(AssetImage('assets/images/icons/User.png')),
+              label: 'Профиль',
+            ),
+          ],
+        ),
       ),
     );
   }
