@@ -1,3 +1,4 @@
+import 'package:cosmetics_store/core/api/api_client.dart';
 import 'package:cosmetics_store/features/profile/edit_profile/presentation/bloc/edit_profile_bloc.dart';
 import 'package:cosmetics_store/features/profile/presentation/bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => EditProfileBloc(),
+      create: (context) => EditProfileBloc(MockApiClient()),
       child: BlocListener<EditProfileBloc, EditProfileState>(
         listener: (context, state) {
           if (state is EditProfileSavedState) {

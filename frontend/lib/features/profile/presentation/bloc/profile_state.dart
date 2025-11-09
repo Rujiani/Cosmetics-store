@@ -20,6 +20,7 @@ final class ProfileErrorState extends ProfileState {
 }
 
 class User {
+  final String id;
   final String name;
   final String email;
   final String phone;
@@ -27,15 +28,17 @@ class User {
   final Uint8List? avatarBytes;
 
   User({
+    String? id,
     this.name = 'Иван Иванов',
     this.email = 'ivan@example.com',
-    this.phone = '+7 999 123-45-67',
+    this.phone = '+79991234567',
     this.avatarPic = 'assets/images/default/defaultAvatar.png',
     this.avatarBytes,
-  });
+  }) : id = id ?? const Uuid().v4();
 
   User copyWith({Uint8List? avatarBytes}) {
     return User(
+      id: id,
       name: name,
       email: email,
       phone: phone,
