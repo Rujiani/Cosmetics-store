@@ -1,5 +1,6 @@
 import 'package:cosmetics_store/core/widgets/products/product_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProductCard extends StatelessWidget {
   final Product product;
@@ -9,60 +10,60 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      width: 200,
-      child: Card(
-        elevation: 2,
-        child: InkWell(
-          onTap: onTap,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AspectRatio(
-                aspectRatio: 1,
-                child: Image.asset(product.images.first, fit: BoxFit.cover),
+    return InkWell(
+      onTap: onTap,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Card(
+            shadowColor: Colors.transparent,
+            child: SizedBox(
+              height: 187.64999389648438,
+              width: 161.00833129882812,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 13.9, horizontal: 23.17),
+                child: Image.asset(product.images.first, fit: BoxFit.contain),
               ),
-
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product.name,
-                      style: Theme.of(context).textTheme.titleMedium,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-
-                    SizedBox(height: 4),
-
-                    Text(
-                      '${product.price.toStringAsFixed(0)} ₽',
-                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-
-                    if (product.rating != null) ...[
-                      SizedBox(height: 4),
-                      Row(
-                        children: [
-                          Icon(Icons.star, color: Colors.amber, size: 16),
-                          SizedBox(width: 4),
-                          Text('${product.rating}'),
-                          SizedBox(width: 8),
-                          Text('(${product.reviewCount})'),
-                        ],
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
+
+          Expanded(
+            child: SizedBox(
+              height: 162.1666717529297,
+              width: 162.1666717529297,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.category,
+                    style: TextStyle(fontFamily: 'Raleway', fontSize: 11.58),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+
+                  Text(
+                    product.name,
+                    style: TextStyle(fontFamily: 'Raleway', fontSize: 14),
+                  ),
+
+                  Text(
+                    NumberFormat.currency(
+                      locale: 'ru_RU',
+                      symbol: '₽',
+                      decimalDigits: 0,
+                    ).format(product.price),
+                    style: TextStyle(
+                      fontFamily: 'Montserrat',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      letterSpacing: 0.01,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
