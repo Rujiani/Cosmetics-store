@@ -1,10 +1,11 @@
+import 'package:cosmetics_store/core/widgets/products/product_entity.dart';
 import 'package:cosmetics_store/features/profile/presentation/bloc/profile_bloc.dart';
 
 abstract class ApiClient {
   Future<User> getProfile();
   Future<User> updateProfile(User user);
-  // Future<List<Product>> getProducts();
-  // Future<List<Product>> getSliderProducts();
+  Future<List<Product>> getProducts();
+  Future<List<Product>> getSliderProducts();
 }
 
 class MockApiClient implements ApiClient {
@@ -51,6 +52,54 @@ class MockApiClient implements ApiClient {
       avatarPic: 'assets/images/default_avatar.png',
     );
   }
+
+  static final _mockProducts = [
+    Product(
+      id: '1',
+      name: 'Увлажняющий крем для лица',
+      price: 2499,
+      description: 'Интенсивное увлажнение на 24 часа',
+      images: ['assets/images/cream1.png'],
+      category: 'Крем',
+      inStock: true,
+      rating: 4.8,
+      reviewCount: 124,
+    ),
+    Product(
+      id: '2',
+      name: 'Тонирующее средство с SPF',
+      price: 1899,
+      description: 'Легкое покрытие с защитой от солнца',
+      images: ['assets/images/foundation1.png'],
+      category: 'Сыворотка',
+      inStock: true,
+      rating: 4.6,
+      reviewCount: 89,
+    ),
+    Product(
+      id: '3',
+      name: 'Помада матовый эффект',
+      price: 1299,
+      description: 'Стойкая помада с матовым финишем',
+      images: ['assets/images/lipstick1.png'],
+      category: 'Тоник',
+      inStock: false,
+      rating: 4.9,
+      reviewCount: 203,
+    ),
+  ];
+
+  @override
+  Future<List<Product>> getProducts() async {
+    await _simulateNetwork();
+    return _mockProducts;
+  }
+
+  @override
+  Future<List<Product>> getSliderProducts() async {
+    await _simulateNetwork();
+    return _mockProducts.take(3).toList();
+  }
 }
 
 class TestMockApiClient implements ApiClient {
@@ -73,5 +122,51 @@ class TestMockApiClient implements ApiClient {
       phone: '+79999999999',
       avatarPic: 'assets/images/default_avatar.png',
     );
+  }
+
+  static final _mockProducts = [
+    Product(
+      id: '1',
+      name: 'Увлажняющий крем для лица',
+      price: 2499,
+      description: 'Интенсивное увлажнение на 24 часа',
+      images: ['assets/images/cream1.png'],
+      category: 'Крем',
+      inStock: true,
+      rating: 4.8,
+      reviewCount: 124,
+    ),
+    Product(
+      id: '2',
+      name: 'Тонирующее средство с SPF',
+      price: 1899,
+      description: 'Легкое покрытие с защитой от солнца',
+      images: ['assets/images/foundation1.png'],
+      category: 'Сыворотка',
+      inStock: true,
+      rating: 4.6,
+      reviewCount: 89,
+    ),
+    Product(
+      id: '3',
+      name: 'Помада матовый эффект',
+      price: 1299,
+      description: 'Стойкая помада с матовым финишем',
+      images: ['assets/images/lipstick1.png'],
+      category: 'Тоник',
+      inStock: false,
+      rating: 4.9,
+      reviewCount: 203,
+    ),
+  ];
+
+  @override
+  Future<List<Product>> getProducts() async {
+    return _mockProducts;
+  }
+
+  @override
+  Future<List<Product>> getSliderProducts() async {
+    return _mockProducts.take(3).toList();
   }
 }
