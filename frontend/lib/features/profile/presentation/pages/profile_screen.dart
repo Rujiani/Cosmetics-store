@@ -52,8 +52,7 @@ class ProfileScreen extends StatelessWidget {
                         style: textButtonStyle,
                         icon: Icon(Icons.edit),
                         onPressed: () {
-                          final currentContext =
-                              context; // ← Сохраняем ДО async
+                          final currentContext = context;
                           final currentBloc = context.read<ProfileBloc>();
 
                           Navigator.push(
@@ -63,7 +62,6 @@ class ProfileScreen extends StatelessWidget {
                                   EditProfileScreen(user: state.user),
                             ),
                           ).then((updatedUser) {
-                            // Используем сохраненные переменные
                             if (updatedUser != null && currentContext.mounted) {
                               currentBloc.add(
                                 UpdateProfileEvent(newUser: updatedUser),
