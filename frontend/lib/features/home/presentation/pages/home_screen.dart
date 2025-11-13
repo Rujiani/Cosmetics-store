@@ -1,5 +1,7 @@
 import 'package:cosmetics_store/core/api/api_client.dart';
 import 'package:cosmetics_store/core/widgets/products/product_card.dart';
+import 'package:cosmetics_store/core/widgets/slider/image_slider.dart';
+import 'package:cosmetics_store/core/widgets/slider/promotion_entity.dart';
 import 'package:cosmetics_store/features/home/presentation/product_bloc/product_bloc_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,10 +18,7 @@ class HomeScreen extends StatelessWidget {
               ProductBloc(MockApiClient())..add(LoadProductsEvent()),
         ),
       ],
-      child: Scaffold(
-        appBar: AppBar(title: Text('Главная')),
-        body: HomeContent(),
-      ),
+      child: Scaffold(body: HomeContent()),
     );
   }
 }
@@ -30,7 +29,9 @@ class HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(children: [_buildProductSection(context)]),
+      child: Column(
+        children: [_buildBannerSection(context), _buildProductSection(context)],
+      ),
     );
   }
 
@@ -59,6 +60,23 @@ class HomeContent extends StatelessWidget {
         }
         return Center(child: Text('Ошибка загрузки'));
       },
+    );
+  }
+
+  Widget _buildBannerSection(BuildContext context) {
+    return ImageSlider(
+      promotions: [
+        Promotion(
+          image: 'assets/images/sale1.png',
+          mainText: 'СКИДКА -15%',
+          promotionText: 'Для вас и еще вас',
+        ),
+        Promotion(
+          image: 'assets/images/sale2.png',
+          mainText: 'СКИДКА -23%',
+          promotionText: 'Для вас и еще вас и много вас крч',
+        ),
+      ],
     );
   }
 }
