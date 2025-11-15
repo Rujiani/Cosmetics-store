@@ -9,8 +9,18 @@ import 'package:flutter_test/flutter_test.dart';
 
 class ErrorMockApiClient implements ApiClient {
   @override
-  Future<List<Product>> getProducts() async {
+  Future<List<Product>> getNewProducts() async {
     throw Exception('Failed to load products');
+  }
+
+  @override
+  Future<List<Product>> getSaleProducts() async {
+    throw Exception('Failed to load sale products');
+  }
+
+  @override
+  Future<List<Product>> getHitProducts() async {
+    throw Exception('Failed to load hit products');
   }
 
   @override
@@ -20,11 +30,6 @@ class ErrorMockApiClient implements ApiClient {
 
   @override
   Future<User> updateProfile(User user) async {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<List<Product>> getSliderProducts() async {
     throw UnimplementedError();
   }
 
@@ -48,26 +53,28 @@ void main() {
       productBloc.close();
     });
 
-    // Тест 1: Успешная загрузка продуктов
+    // Тест 1: Успешная загрузка всех продуктов
     blocTest<ProductBloc, ProductState>(
-      'should emit [loading, loaded] when products are loaded successfully',
+      'should emit [loading, loaded] when all products are loaded successfully',
       build: () => productBloc,
-      act: (bloc) => bloc.add(LoadProductsEvent()),
+      act: (bloc) => bloc.add(LoadAllProductsEvent()),
       expect: () => [isA<ProductLoadingState>(), isA<ProductLoadedState>()],
       verify: (bloc) {
         final state = bloc.state;
         expect(state, isA<ProductLoadedState>());
         if (state is ProductLoadedState) {
-          expect(state.products, isNotEmpty);
+          expect(state.newProducts, isNotEmpty);
+          expect(state.saleProducts, isNotEmpty);
+          expect(state.hitProducts, isNotEmpty);
         }
       },
     );
 
-    // Тест 2: Ошибка при загрузке продуктов
+    // Тест 2: Ошибка при загрузке всех продуктов
     blocTest<ProductBloc, ProductState>(
       'should emit [loading, error] when products loading fails',
       build: () => ProductBloc(ErrorMockApiClient()),
-      act: (bloc) => bloc.add(LoadProductsEvent()),
+      act: (bloc) => bloc.add(LoadAllProductsEvent()),
       expect: () => [isA<ProductLoadingState>(), isA<ProductErrorState>()],
       verify: (bloc) {
         final state = bloc.state;

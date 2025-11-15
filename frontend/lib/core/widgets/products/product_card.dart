@@ -16,6 +16,7 @@ class ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Card(
+            color: Color(0xFFF4F4F4),
             shadowColor: Colors.transparent,
             child: SizedBox(
               height: 187.64999389648438,
@@ -46,18 +47,43 @@ class ProductCard extends StatelessWidget {
                     style: TextStyle(fontFamily: 'Raleway', fontSize: 14),
                   ),
 
-                  Text(
-                    NumberFormat.currency(
-                      locale: 'ru_RU',
-                      symbol: '₽',
-                      decimalDigits: 0,
-                    ).format(product.price),
-                    style: TextStyle(
-                      fontFamily: 'Montserrat',
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 0.01,
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        NumberFormat.currency(
+                          locale: 'ru_RU',
+                          symbol: '₽',
+                          decimalDigits: 0,
+                        ).format(product.price - (product.discount ?? 0)),
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontFamily: 'Montserrat',
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      if (product.discount != null)
+                        Text(
+                          NumberFormat.currency(
+                            locale: 'ru_RU',
+                            symbol: '₽',
+                            decimalDigits: 0,
+                          ).format(product.price),
+                          style: TextStyle(
+                            decoration: product.discount != null
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none,
+                            color: Color(0x20000033),
+                            decorationColor: Color(0x20000033),
+                            decorationThickness: 2,
+                            decorationStyle: TextDecorationStyle.solid,
+                            fontFamily: 'Montserrat',
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                    ],
                   ),
                 ],
               ),

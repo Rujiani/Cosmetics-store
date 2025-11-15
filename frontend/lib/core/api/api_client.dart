@@ -5,8 +5,9 @@ import 'package:cosmetics_store/features/profile/presentation/bloc/profile_bloc.
 abstract class ApiClient {
   Future<User> getProfile();
   Future<User> updateProfile(User user);
-  Future<List<Product>> getProducts();
-  Future<List<Product>> getSliderProducts();
+  Future<List<Product>> getNewProducts();
+  Future<List<Product>> getSaleProducts();
+  Future<List<Product>> getHitProducts();
   Future<List<Promotion>> getBanners();
 }
 
@@ -66,6 +67,7 @@ class MockApiClient implements ApiClient {
       inStock: true,
       rating: 4.8,
       reviewCount: 124,
+      discount: 100,
     ),
     Product(
       id: '2',
@@ -92,15 +94,21 @@ class MockApiClient implements ApiClient {
   ];
 
   @override
-  Future<List<Product>> getProducts() async {
+  Future<List<Product>> getNewProducts() async {
     await _simulateNetwork();
     return _mockProducts;
   }
 
   @override
-  Future<List<Product>> getSliderProducts() async {
+  Future<List<Product>> getSaleProducts() async {
     await _simulateNetwork();
-    return _mockProducts.take(3).toList();
+    return _mockProducts;
+  }
+
+  @override
+  Future<List<Product>> getHitProducts() async {
+    await _simulateNetwork();
+    return _mockProducts;
   }
 
   @override
@@ -182,13 +190,18 @@ class TestMockApiClient implements ApiClient {
   ];
 
   @override
-  Future<List<Product>> getProducts() async {
+  Future<List<Product>> getNewProducts() async {
     return _mockProducts;
   }
 
   @override
-  Future<List<Product>> getSliderProducts() async {
-    return _mockProducts.take(3).toList();
+  Future<List<Product>> getSaleProducts() async {
+    return _mockProducts;
+  }
+
+  @override
+  Future<List<Product>> getHitProducts() async {
+    return _mockProducts;
   }
 
   @override

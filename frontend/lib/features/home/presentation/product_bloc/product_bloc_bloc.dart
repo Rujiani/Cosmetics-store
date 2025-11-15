@@ -11,17 +11,25 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final ApiClient apiClient;
 
   ProductBloc(this.apiClient) : super(ProductInitial()) {
-    on<LoadProductsEvent>(_onLoadProducts);
+    on<LoadAllProductsEvent>(_onLoadAllProducts);
   }
 
-  void _onLoadProducts(
-    LoadProductsEvent event,
+  void _onLoadAllProducts(
+    LoadAllProductsEvent event,
     Emitter<ProductState> emit,
   ) async {
     emit(ProductLoadingState());
     try {
-      final products = await apiClient.getProducts();
-      emit(ProductLoadedState(products: products));
+      final newProducts = await apiClient.getNewProducts();
+      final saleProducts = await apiClient.getSaleProducts();
+      final hitProducts = await apiClient.getHitProducts();
+      emit(
+        ProductLoadedState(
+          newProducts: newProducts,
+          saleProducts: saleProducts,
+          hitProducts: hitProducts,
+        ),
+      );
     } catch (e) {
       emit(ProductErrorState(error: e.toString()));
     }

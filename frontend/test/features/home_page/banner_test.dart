@@ -24,12 +24,17 @@ class ErrorMockApiClient implements ApiClient {
   }
 
   @override
-  Future<List<Product>> getProducts() async {
+  Future<List<Product>> getNewProducts() async {
     throw UnimplementedError();
   }
 
   @override
-  Future<List<Product>> getSliderProducts() async {
+  Future<List<Product>> getSaleProducts() async {
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<Product>> getHitProducts() async {
     throw UnimplementedError();
   }
 }
