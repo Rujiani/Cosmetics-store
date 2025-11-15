@@ -1,7 +1,7 @@
 import 'package:cosmetics_store/core/api/api_client.dart';
 import 'package:cosmetics_store/core/widgets/products/product_card.dart';
 import 'package:cosmetics_store/core/widgets/slider/image_slider.dart';
-import 'package:cosmetics_store/core/widgets/slider/promotion_entity.dart';
+import 'package:cosmetics_store/features/home/presentation/banner_bloc/banner_bloc.dart';
 import 'package:cosmetics_store/features/home/presentation/product_bloc/product_bloc_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +16,10 @@ class HomeScreen extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               ProductBloc(MockApiClient())..add(LoadProductsEvent()),
+        ),
+        BlocProvider(
+          create: (context) =>
+              BannerBloc(MockApiClient())..add(LoadBannerEvent()),
         ),
       ],
       child: Scaffold(body: HomeContent()),
@@ -64,19 +68,16 @@ class HomeContent extends StatelessWidget {
   }
 
   Widget _buildBannerSection(BuildContext context) {
-    return ImageSlider(
-      promotions: [
-        Promotion(
-          image: 'assets/images/sale1.png',
-          mainText: 'СКИДКА -15%',
-          promotionText: 'Для вас и еще вас',
-        ),
-        Promotion(
-          image: 'assets/images/sale2.png',
-          mainText: 'СКИДКА -23%',
-          promotionText: 'Для вас и еще вас и много вас крч',
-        ),
-      ],
+    return BlocBuilder<BannerBloc, BannerState>(
+      builder: (context, state) {
+        if (state is BannerLoadingState) {
+          return Center(child: CircularProgressIndicator());
+        }
+        if (state is BannerLoadedState) {
+          return ImageSlider(promotions: state.banners);
+        }
+        return Center(child: Text('Ошибка загрузки'));
+      },
     );
   }
 }

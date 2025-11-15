@@ -1,4 +1,5 @@
 import 'package:cosmetics_store/core/widgets/products/product_entity.dart';
+import 'package:cosmetics_store/core/widgets/slider/promotion_entity.dart';
 import 'package:cosmetics_store/features/profile/presentation/bloc/profile_bloc.dart';
 
 abstract class ApiClient {
@@ -6,6 +7,7 @@ abstract class ApiClient {
   Future<User> updateProfile(User user);
   Future<List<Product>> getProducts();
   Future<List<Product>> getSliderProducts();
+  Future<List<Promotion>> getBanners();
 }
 
 class MockApiClient implements ApiClient {
@@ -100,6 +102,25 @@ class MockApiClient implements ApiClient {
     await _simulateNetwork();
     return _mockProducts.take(3).toList();
   }
+
+  @override
+  Future<List<Promotion>> getBanners() async {
+    await _simulateNetwork();
+    return _mockBanners;
+  }
+
+  static final _mockBanners = [
+    Promotion(
+      image: 'assets/images/sale1.png',
+      mainText: 'СКИДКА -15%',
+      promotionText: 'Для вас и еще вас',
+    ),
+    Promotion(
+      image: 'assets/images/sale2.png',
+      mainText: 'СКИДКА -10%',
+      promotionText: 'Для вас и еще вас',
+    ),
+  ];
 }
 
 class TestMockApiClient implements ApiClient {
@@ -169,4 +190,22 @@ class TestMockApiClient implements ApiClient {
   Future<List<Product>> getSliderProducts() async {
     return _mockProducts.take(3).toList();
   }
+
+  @override
+  Future<List<Promotion>> getBanners() async {
+    return _mockBanners;
+  }
+
+  static final _mockBanners = [
+    Promotion(
+      image: 'assets/images/sale1.png',
+      mainText: 'СКИДКА -15%',
+      promotionText: 'Для вас и еще вас',
+    ),
+    Promotion(
+      image: 'assets/images/sale2.png',
+      mainText: 'СКИДКА -10%',
+      promotionText: 'Для вас и еще вас',
+    ),
+  ];
 }
