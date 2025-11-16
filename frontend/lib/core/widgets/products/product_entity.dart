@@ -9,6 +9,7 @@ class Product {
   final double? rating;
   final int? reviewCount;
   final int? discount;
+  final String? discountText;
 
   Product({
     required this.id,
@@ -21,5 +22,6 @@ class Product {
     this.rating,
     this.reviewCount,
     this.discount,
+    this.discountText,
   });
 }
