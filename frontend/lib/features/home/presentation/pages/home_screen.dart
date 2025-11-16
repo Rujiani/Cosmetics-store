@@ -108,24 +108,40 @@ class HomeContent extends StatelessWidget {
                     Positioned(
                       top: 8,
                       right: 8.01,
-                      child: Stack(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Image.asset(
-                            'assets/images/Star1.png',
-                            width: 25,
-                            height: 25,
-                          ),
-                          Positioned(
-                            top: 5.5,
-                            left: 7.5,
-                            child: Text(
-                              '%',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 11,
-                                fontFamily: 'Montserrat',
-                                fontWeight: FontWeight.w500,
+                          Stack(
+                            children: [
+                              Image.asset(
+                                'assets/images/Star1.png',
+                                width: 25,
+                                height: 25,
                               ),
+                              Positioned(
+                                top: 5.5,
+                                left: 7.5,
+                                child: Text(
+                                  '%',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 11,
+                                    fontFamily: 'Montserrat',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            state.saleProducts[index].discountText ?? '',
+                            style: TextStyle(
+                              letterSpacing: -2,
+                              color: Color(0xFFF47DDA),
+                              fontSize: 16,
+                              fontFamily: 'Montserrat',
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],

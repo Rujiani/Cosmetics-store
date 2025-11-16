@@ -54,7 +54,13 @@ class ProductCard extends StatelessWidget {
                           locale: 'ru_RU',
                           symbol: '₽',
                           decimalDigits: 0,
-                        ).format(product.price - (product.discount ?? 0)),
+                        ).format(
+                          product.price -
+                              (product.discount != null
+                                  ? (product.price * (product.discount! / 100))
+                                        .round()
+                                  : 0),
+                        ),
                         style: TextStyle(
                           color: Colors.black,
                           fontFamily: 'Montserrat',
