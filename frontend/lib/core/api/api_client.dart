@@ -79,6 +79,8 @@ class MockApiClient implements ApiClient {
       inStock: true,
       rating: 4.6,
       reviewCount: 89,
+      discount: 1900 ~/ 2,
+      discountText: '1 + 1',
     ),
     Product(
       id: '3',
