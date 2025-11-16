@@ -8,6 +8,8 @@ class Product {
   final bool inStock;
   final double? rating;
   final int? reviewCount;
+  final int? discount;
+  final String? discountText;
 
   Product({
     required this.id,
@@ -19,5 +21,7 @@ class Product {
     required this.inStock,
     this.rating,
     this.reviewCount,
+    this.discount,
+    this.discountText,
   });
 }
