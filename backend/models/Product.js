@@ -1,4 +1,11 @@
+// models/Product.js
 const mongoose = require("mongoose");
+const {
+  PRODUCT_TYPES,
+  SKIN_TYPES,
+  PURPOSES,
+  LINES,
+} = require("../config/constants");
 
 const productSchema = new mongoose.Schema(
   {
@@ -8,7 +15,6 @@ const productSchema = new mongoose.Schema(
       trim: true,
     },
 
-    
     price: {
       type: Number,
       required: true,
@@ -20,70 +26,52 @@ const productSchema = new mongoose.Schema(
       default: "",
     },
 
-
     images: {
       type: [String],
       default: [],
     },
 
-   
     type: {
-  type: String,
-  required: true,
-  trim: true,
-  enum: [
-    "serum",
-    "toner",
-    "cream",
-    "mask",
-    "gel",
-    "foam",
-    "oil",
-    "lotion",
-    "scrub",
-    "essence"
-  ],
-},
+      type: String,
+      required: true,
+      trim: true,
+      enum: PRODUCT_TYPES,
+    },
 
     inStock: {
       type: Boolean,
       default: true,
     },
 
-   
     skinTypes: {
       type: [String],
-      enum: ["oily", "combination", "normal", "dry", "any"],
-      default: ["any"], 
+      enum: SKIN_TYPES,
+      default: ["any"],
     },
 
-    
     purposes: {
       type: [String],
-      enum: ["cleansing", "hydration", "regeneration"],
+      enum: PURPOSES,
       default: [],
     },
 
-    
     line: {
       type: String,
+      enum: LINES,
       default: null,
       trim: true,
     },
 
-    
     isSet: {
       type: Boolean,
       default: false,
     },
 
-    
     isOnSale: {
       type: Boolean,
       default: false,
     },
 
-    
     rating: {
       type: Number,
       default: null,
@@ -91,14 +79,12 @@ const productSchema = new mongoose.Schema(
       max: 5,
     },
 
-    
     reviewCount: {
       type: Number,
       default: 0,
       min: 0,
     },
 
-    
     discount: {
       type: Number,
       default: null,
@@ -106,20 +92,18 @@ const productSchema = new mongoose.Schema(
       max: 100,
     },
 
-    
     discountText: {
       type: String,
       default: null,
     },
 
-    
     characteristics: {
       type: Object,
       default: {},
     },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 

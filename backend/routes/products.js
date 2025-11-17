@@ -49,7 +49,7 @@ router.get("/", async (req, res) => {
     if (minPrice || maxPrice) {
       filter.price = {};
       if (minPrice) {
-        filter.price.$gte = Number(minPrice); 
+        filter.price.$gte = Number(minPrice);
       }
       if (maxPrice) {
         filter.price.$lte = Number(maxPrice);
@@ -72,20 +72,46 @@ router.get("/", async (req, res) => {
       total,
       page: pageNum,
       limit: limitNum,
-      items: products, 
+      items: products,
     });
   } catch (err) {
     console.error("GET /products error:", err.message);
     res.status(500).json({ message: "Ошибка сервера" });
   }
 });
-router.get("/", async (req, res) => {
+
+
+router.get("/all", async (req, res) => {
   try {
-    console.log("Привет");
     const products = await Product.find();
-    res.json(products);
+    const total = await Product.countDocuments();
+
+    res.json({
+      total,
+      items: products,
+    });
   } catch (err) {
-    console.error("GET /products error:", err.message);
+    console.error("GET /products/all error:", err.message);
+    res.status(500).json({ message: "Ошибка сервера" });
+  }
+});
+
+
+router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({ message: "Товар не найден" });
+    }
+
+    res.json(product);
+  } catch (err) {
+    if (err.name === "CastError") {
+      return res.status(400).json({ message: "Некорректный ID товара" });
+    }
+    console.error("GET /products/:id error:", err.message);
     res.status(500).json({ message: "Ошибка сервера" });
   }
 });
@@ -96,7 +122,7 @@ router.post("/", async (req, res) => {
       name,
       price,
       description,
-      type, 
+      type,
       images,
       inStock,
       skinTypes,
@@ -111,7 +137,6 @@ router.post("/", async (req, res) => {
       discountText,
     } = req.body;
 
-    
     if (!name || type == null || price == null) {
       return res.status(400).json({
         message: "Поля name, price и type обязательны",
@@ -158,10 +183,10 @@ router.put("/:id", async (req, res) => {
       name,
       price,
       description,
-      type, 
+      type,
       images,
       inStock,
-      skinTypes, 
+      skinTypes,
       purposes,
       line,
       isSet,
@@ -194,8 +219,8 @@ router.put("/:id", async (req, res) => {
         discountText,
       },
       {
-        new: true, 
-        runValidators: true, 
+        new: true,
+        runValidators: true,
       }
     );
 
